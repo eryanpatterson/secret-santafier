@@ -7,6 +7,7 @@ import {
 } from "react-router-dom";
 import Layout from './components/layout';
 import Home from './components/home'
+import Register from './components/register';
 
 
 function App() {
@@ -14,13 +15,13 @@ function App() {
     <Layout>
     <Router>
       <Switch>
-        <Route path="/">
+        <Route exact path="/">
           <Home />
         </Route>
-        {/*<Route path="/submit">
-          <Submit />
+        <Route path="/register">
+          <Register />
         </Route>
-        <Route path="/group">
+        {/*<Route path="/group">
           <Group />
         </Route>
         <Route path="/result">
