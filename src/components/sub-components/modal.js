@@ -2,7 +2,7 @@ import { useHistory } from "react-router-dom";
 
 export default function Modal({groupId}) {
     let history = useHistory();
-    const shareLink = "localhost:3000/" + groupId;
+    const shareLink = "localhost:3000/group?id=" + groupId;
 
     function copy() {
         const copyLink = document.getElementById("groupId");
@@ -34,10 +34,10 @@ export default function Modal({groupId}) {
 		        <div class="items-center px-4 py-3">
 			        <button
 				        id="ok-btn"
-				        class="px-4 py-2 bg-green-500 text-white text-base font-medium rounded-md w-full shadow-sm hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-300"
+				        class="px-4 py-2 bg-green-500 text-white text-base font-medium rounded-md shadow-sm hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-300"
                         onClick={(e) => {history.push('/')}}
 			        >
-				        OK
+				        Close
 			        </button>
 		        </div>
             </div>

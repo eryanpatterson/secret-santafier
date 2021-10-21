@@ -1,6 +1,5 @@
 import { useState } from "react";
-import { useHistory } from "react-router-dom";
-import Modal from "./modal";
+import Modal from "./sub-components/modal";
 
 
 export default function Register() {
