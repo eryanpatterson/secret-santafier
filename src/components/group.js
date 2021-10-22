@@ -25,9 +25,9 @@ export default function Group() {
             <label>Group Id:</label>
             <input className="font-bold border-2 p-2 my-2 rounded-md" type='text' value={groupId} onChange={(e) => setId(e.target.value)} />
             {//<button onClick={faceBookLogin} className="rounded-md bg-blue-300">Continue with Facebook</button>
-            }<button onClick={(e) => setForm(!showForm)} className="rounded-md bg-red-500 p-3 font-semibold text-white">Enter details manually</button>
+            }<button onClick={(e) => setForm(!showForm)} className="transition-all duration-500 rounded-md bg-red-500 border-2 border-white p-3 font-semibold text-white hover:bg-green-400">Enter details manually</button>
         </div>
-        {showForm && <Form groupId={groupId} />}
+        <Form groupId={groupId} display={showForm} />
     </>
     )
 }
