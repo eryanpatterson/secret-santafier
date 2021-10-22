@@ -4,7 +4,7 @@ import Form from "./sub-components/form";
 
 export default function Group() {
     const [groupId, setId] = useState('');
-    const [userForm, setForm] = useState(false);
+    const [showForm, setForm] = useState(false);
     const urlQueryParams = new URLSearchParams(window.location.search);
     const params = Object.fromEntries(urlQueryParams.entries());
 
@@ -20,12 +20,14 @@ export default function Group() {
     }
 
     return (
+    <>    
         <div className="flex flex-col items-center justify-center p-10 text-gray-700 font-bold">
             <label>Group Id:</label>
             <input className="font-bold border-2 p-2 my-2 rounded-md" type='text' value={groupId} onChange={(e) => setId(e.target.value)} />
-            <button onClick={faceBookLogin} className="rounded-md bg-blue-300">Continue with Facebook</button>
-            <button onClick={(e) => setForm(true)} className="rounded-md bg-red-400 p-3">Enter details manually</button>
-            {userForm && <Form groupId={groupId} />}
+            {//<button onClick={faceBookLogin} className="rounded-md bg-blue-300">Continue with Facebook</button>
+            }<button onClick={(e) => setForm(!showForm)} className="rounded-md bg-red-500 p-3 font-semibold text-white">Enter details manually</button>
         </div>
+        {showForm && <Form groupId={groupId} />}
+    </>
     )
 }
