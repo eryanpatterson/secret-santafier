@@ -12,12 +12,12 @@ export default function Home() {
         <div className={narrowStripe}></div>
         <div className="h-20 flex flex-row-reverse justify-evenly items-center mt-2 mb-2 bg-red-500 shadow-md">
             <Link to="/register">
-                <button className="transition-all duration-500 bg-white shadow-md font-bold px-2 py-3 rounded-md text-lg text-green-600 border-2 border-white hover:bg-green-400 hover:border-green-400 hover:text-white">
+                <button className="transition-all duration-500 hover:bg-white shadow-md font-bold px-2 py-3 rounded-md text-lg hover:text-red-500 border-2 border-white bg-red-500 text-white">
                     Create Group
                 </button>
             </Link>
             <Link to="/group">
-                <button className="transition-all duration-500 bg-white shadow-md font-bold px-2 py-3 rounded-md text-lg text-red-500 border-2 border-white hover:bg-red-500 hover:text-white">
+                <button className="transition-all duration-500 hover:bg-white shadow-md font-bold px-2 py-3 rounded-md text-lg hover:text-red-500 border-2 border-white bg-red-500 text-white">
                     Find Group
                 </button>        
             </Link>
