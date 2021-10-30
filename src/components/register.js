@@ -1,22 +1,35 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Modal from "./sub-components/modal";
 
 
 export default function Register() {
     const [groupName, setGroupName] = useState('');
     const [email, setEmail] = useState('');
-    const [groupSize, setGroupSize] = useState('');
+    const [pwd, setPwd] = useState('');
     const [displayModal, setModal] = useState(false);
     const [groupId, setGroupId] = useState('');
-    const body = {
-        groupName: groupName,
-        email: email,
-        groupSize: groupSize
-    }
+    const [groupSize, setGroupSize] = useState(1);
+    const [memberInfo, setInputs] = useState('');
 
     async function handleSubmit(e) {
         e.preventDefault();
-        console.log(body.email);
+
+        for (let i = 0; i < groupSize; i++) {
+            members.push({
+                name: document.getElementById(`Member ${i} name`).value,
+                email: document.getElementById(`Member ${i} email`).value
+            })
+        }
+
+        const body = {
+            group: {
+                name: groupName,
+                admin: 'Admin',
+                adminEmail: email,
+                pwd: pwd
+            },
+            members: members
+        }
 
         const register = await fetch('/group-register', {
             method: 'POST',
@@ -25,11 +38,11 @@ export default function Register() {
         })
         
         if (register.status === 200) {
-            const response = await register.json()
+            await register.json()
                 .then(data => {
                     setGroupId(data.groupId._id)
                     console.log(data.groupId._id)
-                });
+            });
             setModal(true)
             return {success: true};
             
@@ -39,6 +52,39 @@ export default function Register() {
         }
     }
 
+    const members = [];
+
+    useEffect(() => {
+        const memberInputs = [];
+        for (let i = 0; i < groupSize; i++) {
+            memberInputs.push({name: `Member ${i} name`, email: `Member ${i} email`})
+        } 
+        setInputs(memberInputs.map(({name, email}) => (
+            <div key={name} className="flex items-center justify-around mb-2">
+                <div>    
+                    <div>
+                        <label>
+                            Name
+                        </label>
+                    </div>
+                    <div>
+                        <input name={name} id={name} type='text' className="bg-gray-100 border-2 rounded-md" />
+                    </div>
+                </div>
+                <div>    
+                    <div>
+                        <label>
+                            Email
+                        </label>
+                    </div>
+                    <div>
+                        <input name={email} id={email} type='email' className="bg-gray-100 border-2 rounded-md" />
+                    </div>
+                </div>
+            </div>
+        ))
+    )}, [groupSize]);
+            
     return (
         <>
             {displayModal === true ? <Modal groupId={groupId} /> : null}
@@ -50,7 +96,7 @@ export default function Register() {
                         </label>
                     </div>
                     <div>
-                        <input value={groupName} onChange={(e) => setGroupName(e.target.value)} className="bg-gray-100 border-2 rounded-md" />
+                        <input type="text" value={groupName} onChange={(e) => setGroupName(e.target.value)} className="bg-gray-100 border-2 rounded-md" />
                     </div>
                 </div>
                 <div className="flex justify-center mb-5">
@@ -63,14 +109,24 @@ export default function Register() {
                         <input value={email} onChange={(e) => setEmail(e.target.value)} type='email' className="bg-gray-100 border-2 rounded-md" />
                     </div>
                 </div>
-                <div className="flex justify-center">
+                <div className="flex justify-center mb-4">
                     <div className="w-1/3">
                         <label>
-                            Number of Participants
+                            Group Password
                         </label>
                     </div>
                     <div>
-                        <input value={groupSize} onChange={(e) => setGroupSize(e.target.value)} type='number' className="bg-gray-100 border-2 rounded-md" />
+                        <input value={pwd} onChange={(e) => setPwd(e.target.value)} type='password' className="bg-gray-100 border-2 rounded-md" />
+                    </div>
+                </div>
+                <div className="flex flex-col flex-wrap justify-around p-2">
+                    
+                    {memberInfo}
+                    <div className="flex justify-center mt-2">
+                        <div className="flex items-center w-1/5 justify-around">
+                            <button onClick={(e) => setGroupSize(groupSize + 1)} type="button" className="material-icons-outlined text-white bg-green-400 rounded-md p-1">add</button>
+                            <button onClick={(e) => setGroupSize(groupSize - 1)} type="button" className="material-icons-outlined text-white bg-red-500 rounded-md p-1">remove</button>
+                        </div>
                     </div>
                 </div>
                 <div className="flex justify-center p-3 ">

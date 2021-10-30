@@ -9,12 +9,14 @@ export default function Group() {
     const params = Object.fromEntries(urlQueryParams.entries());
 
     useEffect(() => {
-        params.id && setId(params.id);
-    })
+        if (params.id) {
+            setId(params.id);
+        }
+    }, [params.id])
     
     async function faceBookLogin() {
         console.log("Hiyadeheydayadoooo!!!!??")
-        const res = await fetch('/auth/facebook/callback')
+        await fetch('/auth/facebook')
             .then(res => res.json())
             .then(data => console.log(data))
     }
@@ -23,10 +25,11 @@ export default function Group() {
     <>    
         <div className="flex flex-col items-center justify-center p-10 text-gray-700 font-bold">
             <label>Group Id:</label>
-            <input className="font-bold border-2 p-2 my-2 rounded-md" type='text' value={groupId} onChange={(e) => setId(e.target.value)} />
-            {//<button onClick={faceBookLogin} className="rounded-md bg-blue-300">Continue with Facebook</button>
-            }<button onClick={(e) => setForm(!showForm)} className="transition-all duration-500 rounded-md bg-red-500 border-2 border-white p-3 font-semibold text-white hover:bg-green-400">Enter details manually</button>
+            <input className="font-bold border-4 p-2 my-2 rounded-md outline-none focus:border-green-400" type='text' value={groupId} onChange={(e) => setId(e.target.value)} />
+            <button onClick={faceBookLogin} className="rounded-md bg-blue-300">Continue with Facebook</button>
+            <button onClick={(e) => setForm(!showForm)} className="transition-all duration-500 rounded-md bg-red-500 border-2 border-white p-3 font-semibold text-white hover:bg-green-400">Enter details manually</button>
         </div>
+        <a className="text-black" href="http://localhost:3001/auth/facebook">Facebook</a>
         <Form groupId={groupId} display={showForm} />
     </>
     )

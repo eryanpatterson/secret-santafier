@@ -11,8 +11,8 @@ import Group from './components/group';
 
 function App() {
   return (
-    <Layout>
     <Router>
+    <Layout>
       <Switch>
         <Route exact path="/">
           <Home />
@@ -27,8 +27,8 @@ function App() {
           <Result />
         </Route> */}
       </Switch>
-    </Router>
     </Layout>
+    </Router>
   );
 }
 

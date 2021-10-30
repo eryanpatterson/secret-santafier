@@ -5,6 +5,9 @@ module.exports = {
     extend: {
       transitionProperty: {
         'height': 'height',
+      },
+      outline: {
+        green: '3px solid #34D399'
       }
     },
     fontFamily: {
