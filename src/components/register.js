@@ -6,8 +6,8 @@ export default function Register() {
     const [groupName, setGroupName] = useState('');
     const [email, setEmail] = useState('');
     const [pwd, setPwd] = useState('');
+    const [admin, setAdmin] = useState('');
     const [displayModal, setModal] = useState(false);
-    const [groupId, setGroupId] = useState('');
     const [groupSize, setGroupSize] = useState(1);
     const [memberInfo, setInputs] = useState('');
 
@@ -20,11 +20,11 @@ export default function Register() {
                 email: document.getElementById(`Member ${i} email`).value
             })
         }
-
+        console.log("Form submit: " + admin);
         const body = {
             group: {
                 name: groupName,
-                admin: 'Admin',
+                admin: admin,
                 adminEmail: email,
                 pwd: pwd
             },
@@ -36,20 +36,11 @@ export default function Register() {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(body),
         })
-        
+        console.log(register.status)
         if (register.status === 200) {
-            await register.json()
-                .then(data => {
-                    setGroupId(data.groupId._id)
-                    console.log(data.groupId._id)
-            });
             setModal(true)
             return {success: true};
-            
-        } else {
-            console.log(register.text())
-            return {success: false}
-        }
+        } 
     }
 
     const members = [];
@@ -87,8 +78,18 @@ export default function Register() {
             
     return (
         <>
-            {displayModal === true ? <Modal groupId={groupId} /> : null}
+            {displayModal === true ? <Modal /> : null}
             <form onSubmit={(e) => {handleSubmit(e)}} className="text-gray-600 font-bold mt-5">
+            <div className="flex justify-center mb-5">
+                    <div className="w-1/3">
+                        <label>
+                            Name
+                        </label>
+                    </div>
+                    <div>
+                        <input type="text" value={admin} onChange={(e) => setAdmin(e.target.value)} className="bg-gray-100 border-2 rounded-md" />
+                    </div>
+                </div>
                 <div className="flex justify-center mb-5">
                     <div className="w-1/3">
                         <label>

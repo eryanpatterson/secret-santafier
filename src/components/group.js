@@ -3,34 +3,29 @@ import Form from "./sub-components/form";
 //import facebook from "../lib/facebook";
 
 export default function Group() {
-    const [groupId, setId] = useState('');
     const [showForm, setForm] = useState(false);
+    const [token, setToken] = useState('');
     const urlQueryParams = new URLSearchParams(window.location.search);
     const params = Object.fromEntries(urlQueryParams.entries());
 
     useEffect(() => {
-        if (params.id) {
-            setId(params.id);
-        }
-    }, [params.id])
-    
-    async function faceBookLogin() {
-        console.log("Hiyadeheydayadoooo!!!!??")
-        await fetch('/auth/facebook')
-            .then(res => res.json())
-            .then(data => console.log(data))
-    }
+        fetch('/verify-email', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({
+                token: params.token
+            }),
+        }).then(res => res.json())
+        .then(data => setToken(data.token))
+    }, [params.token])
 
     return (
     <>    
         <div className="flex flex-col items-center justify-center p-10 text-gray-700 font-bold">
-            <label>Group Id:</label>
-            <input className="font-bold border-4 p-2 my-2 rounded-md outline-none focus:border-green-400" type='text' value={groupId} onChange={(e) => setId(e.target.value)} />
-            <button onClick={faceBookLogin} className="rounded-md bg-blue-300">Continue with Facebook</button>
-            <button onClick={(e) => setForm(!showForm)} className="transition-all duration-500 rounded-md bg-red-500 border-2 border-white p-3 font-semibold text-white hover:bg-green-400">Enter details manually</button>
+            <h3>Email verification successful!</h3>
+            <button onClick={(e) => setForm(!showForm)} className="transition-all duration-500 rounded-md bg-red-500 border-2 border-white p-3 font-semibold text-white hover:bg-green-400">Enter Mailing Address</button>
         </div>
-        <a className="text-black" href="http://localhost:3001/auth/facebook">Facebook</a>
-        <Form groupId={groupId} display={showForm} />
+        <Form token={token} display={showForm} />
     </>
     )
 }

@@ -23,9 +23,6 @@ function App() {
         <Route path="/group">
           <Group />
         </Route>
-        {/*<Route path="/result">
-          <Result />
-        </Route> */}
       </Switch>
     </Layout>
     </Router>

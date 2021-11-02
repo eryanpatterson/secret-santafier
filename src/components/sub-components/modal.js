@@ -1,16 +1,7 @@
 import { useHistory } from "react-router-dom";
 
-export default function Modal({groupId}) {
+export default function Modal() {
     let history = useHistory();
-    const shareLink = "localhost:3000/group?id=" + groupId;
-
-    function copy() {
-        const copyLink = document.getElementById("groupId");
-        copyLink.select();
-        copyLink.setSelectionRange(0, 99999);
-
-        navigator.clipboard.writeText(copyLink.value);
-    }
 
     return (
         
@@ -25,12 +16,8 @@ export default function Modal({groupId}) {
                 </div>
                 <div className="h-2 w-full shadow-md bg-red-500"></div>
                 <div className="text-gray-800 font-semibold p-3">
-                    <p> Share the link below with your group. </p>
+                    <p> You will get an email once your group members have confirmed. </p>
                 </div>
-		        <div class="flex justify-evenly mt-2 px-7 py-3 text-gray-600">
-			        <input type="text" value={shareLink} id="groupId" className="border-2 rounded-md p-2" />
-                    <button onClick={copy}><span className="material-icons-outlined">content_copy</span></button>
-		        </div>
 		        <div class="items-center px-4 py-3">
 			        <button
 				        id="ok-btn"
