@@ -1,6 +1,6 @@
 import { useHistory } from "react-router-dom";
 
-export default function Modal(heading, body) {
+export default function Modal({heading, body}) {
     let history = useHistory();
 
     return (
