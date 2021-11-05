@@ -1,6 +1,6 @@
 import { useHistory } from "react-router-dom";
 
-export default function Modal() {
+export default function Modal(heading, body) {
     let history = useHistory();
 
     return (
@@ -12,11 +12,11 @@ export default function Modal() {
             <div className="mt-3 text-center">
                 <div className="h-2 w-full shadow-md bg-red-500"></div>
                 <div className="h-16 w-full bg-red-500 mt-2 mb-2 flex justify-center items-center shadow-md">
-                    <h3 class="text-2xl font-display text-white">Group Added!</h3>
+                    <h3 class="text-2xl font-display text-white">{heading}</h3>
                 </div>
                 <div className="h-2 w-full shadow-md bg-red-500"></div>
                 <div className="text-gray-800 font-semibold p-3">
-                    <p> You will get an email once your group members have confirmed. </p>
+                    <p>{body}</p>
                 </div>
 		        <div class="items-center px-4 py-3">
 			        <button
