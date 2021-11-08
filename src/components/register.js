@@ -78,7 +78,7 @@ export default function Register() {
             
     return (
         <>
-            {displayModal === true ? <Modal /> : null}
+            {displayModal === true ? <Modal heading="Group Added!" body="You will get an email when all group members have confirmed." /> : null}
             <form onSubmit={(e) => {handleSubmit(e)}} className="text-gray-600 font-bold mt-5">
             <div className="flex justify-center mb-5">
                     <div className="w-1/3">
