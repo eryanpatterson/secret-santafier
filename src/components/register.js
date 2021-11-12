@@ -5,15 +5,17 @@ import Modal from "./sub-components/modal";
 export default function Register() {
     const [groupName, setGroupName] = useState('');
     const [email, setEmail] = useState('');
-    const [pwd, setPwd] = useState('');
     const [admin, setAdmin] = useState('');
+    const [exchangeDate, setDate] = useState('');
+    const [spendLimit, setLimit] = useState('');
     const [displayModal, setModal] = useState(false);
     const [groupSize, setGroupSize] = useState(1);
     const [memberInfo, setInputs] = useState('');
 
     async function handleSubmit(e) {
         e.preventDefault();
-
+        const date = Date.parse(exchangeDate);
+        const dateString = new Date(date).toLocaleString('default', { month: 'long', year: 'numeric', day: 'numeric' });
         for (let i = 0; i < groupSize; i++) {
             members.push({
                 name: document.getElementById(`Member ${i} name`).value,
@@ -26,7 +28,8 @@ export default function Register() {
                 name: groupName,
                 admin: admin,
                 adminEmail: email,
-                pwd: pwd
+                exchangeDate: dateString,
+                spendLimit: spendLimit
             },
             members: members
         }
@@ -110,16 +113,27 @@ export default function Register() {
                         <input value={email} onChange={(e) => setEmail(e.target.value)} type='email' className="bg-gray-100 border-2 rounded-md" />
                     </div>
                 </div>
-                <div className="flex justify-center mb-4">
+                <div className="flex justify-center mb-5">
                     <div className="w-1/3">
                         <label>
-                            Group Password
+                            Spending Limit
                         </label>
                     </div>
                     <div>
-                        <input value={pwd} onChange={(e) => setPwd(e.target.value)} type='password' className="bg-gray-100 border-2 rounded-md" />
+                        <input value={spendLimit} onChange={(e) => setLimit(e.target.value)} type='number' className="bg-gray-100 border-2 rounded-md" />
                     </div>
                 </div>
+                <div className="flex justify-center mb-5">
+                    <div className="w-1/3">
+                        <label>
+                            Gift Exchange Date
+                        </label>
+                    </div>
+                    <div>
+                        <input value={exchangeDate} onChange={(e) => setDate(e.target.value)} type='date' className="bg-gray-100 border-2 rounded-md" />
+                    </div>
+                </div>
+                
                 <div className="flex flex-col flex-wrap justify-around p-2">
                     
                     {memberInfo}
