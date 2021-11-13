@@ -1,29 +1,38 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
+import { useLocation } from "react-router";
 import Form from "./sub-components/form";
+
+function useQuery() {
+    const { search } = useLocation();
+    return useMemo(() => new URLSearchParams(search), [search]);
+}
 
 export default function Group() {
     const [showForm, setForm] = useState(false);
     const [token, setToken] = useState('');
     const [errMessage, setErrMessage] = useState('');
-    const urlQueryParams = new URLSearchParams(window.location.search);
-    const params = Object.fromEntries(urlQueryParams.entries());
     
-    useEffect( async () => {
-        const res = await fetch('/verify-email', {
-            method: 'POST',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({
-                token: params.token
-            }),
-        });
+    const queryToken = useQuery().get("token");
+    console.log(queryToken);
+    useEffect(() => {
+        async function fetchData() {
+            const res = await fetch('/api/verify-email', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({
+                    token: queryToken
+                }),
+            });
 
-        if (res.status === 200) {
-            res.json()
-            .then(data => setToken(data.token))
-        } else {
-            setErrMessage("Token Invalid");
+            if (res.status === 200) {
+                res.json()
+                .then(data => setToken(data.token))
+            } else {
+                setErrMessage("Token Invalid");
+            }
         }
-    }, [params.token])
+        fetchData();
+    }, [queryToken])
 
     return (
     <>    

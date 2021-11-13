@@ -1,5 +1,4 @@
 import { useState } from "react"
-import { useHistory } from "react-router";
 import Modal from "./modal";
 
 export default function Form({ token, display }) {
@@ -8,8 +7,6 @@ export default function Form({ token, display }) {
     const [state, setState] = useState('');
     const [zip, setZip] = useState('');
     const [displayModal, setModal] = useState(0);
-
-    const history = useHistory();
     
     let formDisplay;
     display ? (formDisplay = "transition-all h-80 ease-in-out duration-700 bg-red-500 rounded-b-lg w-full p-5 font-bold")
@@ -17,7 +14,7 @@ export default function Form({ token, display }) {
     
     async function handleSubmit(e) {
         e.preventDefault();
-        const res = await fetch('/address', {
+        const res = await fetch('/api/address', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({

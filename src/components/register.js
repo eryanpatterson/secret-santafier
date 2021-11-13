@@ -34,12 +34,12 @@ export default function Register() {
             members: members
         }
 
-        const register = await fetch('/group-register', {
+        const register = await fetch('/api/group-register', {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: { 'content-type': 'application/json' },
             body: JSON.stringify(body),
-        })
-        console.log(register.status)
+        });
+        console.log(register.status);
         if (register.status === 200) {
             setModal(true)
             return {success: true};
