@@ -11,6 +11,7 @@ export default function Register() {
     const [displayModal, setModal] = useState(false);
     const [groupSize, setGroupSize] = useState(1);
     const [memberInfo, setInputs] = useState('');
+    const [useAddress, setAddress] = useState(false);
 
     async function handleSubmit(e) {
         e.preventDefault();
@@ -22,14 +23,15 @@ export default function Register() {
                 email: document.getElementById(`Member ${i} email`).value
             })
         }
-        console.log("Form submit: " + admin);
+        console.log(useAddress);
         const body = {
             group: {
                 name: groupName,
                 admin: admin,
                 adminEmail: email,
                 exchangeDate: dateString,
-                spendLimit: spendLimit
+                spendLimit: spendLimit,
+                useAddress: useAddress,
             },
             members: members
         }
@@ -39,7 +41,7 @@ export default function Register() {
             headers: { 'content-type': 'application/json' },
             body: JSON.stringify(body),
         });
-        console.log(register.status);
+        console.log(register);
         if (register.status === 200) {
             setModal(true)
             return {success: true};
@@ -131,6 +133,16 @@ export default function Register() {
                     </div>
                     <div>
                         <input value={exchangeDate} onChange={(e) => setDate(e.target.value)} type='date' className="bg-gray-100 border-2 rounded-md" />
+                    </div>
+                </div>
+                <div className="flex justify-center mb-5">
+                    <div className="w-1/3">
+                        <label>
+                            Include Mailing Address?
+                        </label>
+                    </div>
+                    <div> 
+                        <input onChange={(e) => setAddress(!useAddress)} type='checkbox' className="h-6 w-6 bg-gray-100 border-2 rounded-md mt-3" />
                     </div>
                 </div>
                 
