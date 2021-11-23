@@ -12,6 +12,7 @@ export default function Register() {
     const [groupSize, setGroupSize] = useState(1);
     const [memberInfo, setInputs] = useState('');
     const [useAddress, setAddress] = useState(false);
+    const [errMessage, setErrMsg] = useState(null)
 
     async function handleSubmit(e) {
         e.preventDefault();
@@ -36,16 +37,18 @@ export default function Register() {
             members: members
         }
 
-        const register = await fetch('/api/group-register', {
+        const response = await fetch('/api/group-register', {
             method: 'POST',
             headers: { 'content-type': 'application/json' },
             body: JSON.stringify(body),
         });
-        console.log(register);
-        if (register.status === 200) {
+
+        const register = await response.json();
+
+        if (response.status === 200) {
             setModal(true)
             return {success: true};
-        } 
+        } else setErrMsg(register.message); 
     }
 
     const members = [];
@@ -103,6 +106,7 @@ export default function Register() {
                     </div>
                     <div>
                         <input type="text" value={groupName} onChange={(e) => setGroupName(e.target.value)} className="bg-gray-100 border-2 rounded-md" />
+                        {errMessage && <p className="text-red-500 text-center">{errMessage}</p>}
                     </div>
                 </div>
                 <div className="flex justify-center mb-5">
